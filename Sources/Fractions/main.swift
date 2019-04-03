@@ -1,1 +1,4 @@
-print("Hello, world!")
+print("? ")
+while let input = readLine() {
+  print(input)
+}
