@@ -165,6 +165,28 @@ final class FractionTests: XCTestCase {
     XCTAssertEqual(Fraction(whole: 0, numerator: 0, denominator: 0).uiDescription, "0")
   }
 
+  // MARK: simplify
+
+  func testSimplifyWhenSimplified() {
+    let f = Fraction(whole: 1, numerator: 2, denominator: 3)
+    XCTAssertEqual(f.simplify, Fraction(whole: 1, numerator: 2, denominator: 3))
+  }
+
+  func testSimplifyEqualNumeratorAndDenominator() {
+    let f = Fraction(whole: 0, numerator: 1, denominator: 1)
+    XCTAssertEqual(f.simplify, Fraction(whole: 1, numerator: 0, denominator: 0))
+  }
+
+  func testSimplifyDenominatorEvenlyDivisibleByNumerator() {
+    let f = Fraction(whole: 0, numerator: 2, denominator: 4)
+    XCTAssertEqual(f.simplify, Fraction(whole: 0, numerator: 1, denominator: 2))
+  }
+
+  func testSimplifyImproper() {
+    let f = Fraction(whole: 0, numerator: 3, denominator: 2)
+    XCTAssertEqual(f.simplify, Fraction(whole: 1, numerator: 1, denominator: 2))
+  }
+
   static var allTests = [
     ("testEmptyString", testEmptyString),
   ]

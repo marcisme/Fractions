@@ -80,6 +80,21 @@ public struct Fraction: Equatable {
     return d
   }
 
+  public var simplify: Fraction {
+    if numerator == denominator {
+      return Fraction(whole: whole + 1, numerator: 0, denominator: 0, isNegative: isNegative)
+    }
+    if denominator % numerator == 0 {
+      return Fraction(whole: whole, numerator: 1, denominator: denominator / numerator, isNegative: isNegative)
+    }
+    if numerator > denominator {
+      let wholeAddend = numerator / denominator
+      let newNumerator = numerator % denominator
+      return Fraction(whole: whole + wholeAddend, numerator: newNumerator, denominator: denominator, isNegative: isNegative)
+    }
+    return self
+  }
+
   // TODO: LCD would reduce overflows
   public func commonify(_ other: Fraction) throws -> (Fraction, Fraction) {
     guard denominator != other.denominator else {
