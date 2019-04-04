@@ -59,6 +59,18 @@ public struct Fraction: Equatable {
       fatalError("expected 1, 2 or 3 parts")
     }
   }
+
+  // TODO: LCD would reduce overflows
+  public func commonify(_ other: Fraction) throws -> (Fraction, Fraction) {
+    guard denominator != other.denominator else {
+      return (self, other)
+    }
+
+    let commonDenominator = denominator * other.denominator
+    let commonSelf = Fraction(whole: whole, numerator: numerator * other.denominator, denominator: commonDenominator)
+    let commonOther = Fraction(whole: other.whole, numerator: other.numerator * denominator, denominator: commonDenominator)
+    return (commonSelf, commonOther)
+  }
 }
 
 // this is slightly less awkward than using a class method

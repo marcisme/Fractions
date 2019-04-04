@@ -33,7 +33,7 @@ public enum InfixOperation: Equatable {
   }
 
   private func add(_ left: Fraction, _ right: Fraction) throws -> Fraction {
-    let (commonLeft, commonRight) = try commonify(left, right)
+    let (commonLeft, commonRight) = try left.commonify(right)
     switch (left.isNegative, right.isNegative) {
     case (false, false), (true, true):
       let whole = try addHandlingOverflow(commonLeft.whole, commonRight.whole)
@@ -62,12 +62,5 @@ public enum InfixOperation: Equatable {
       throw Error.operationOverflowed
     }
     return result
-  }
-
-  private func commonify(_ left: Fraction, _ right: Fraction) throws -> (Fraction, Fraction) {
-    let commonDenominator = left.denominator * right.denominator
-    let commonLeft = Fraction(whole: left.whole, numerator: left.numerator * right.denominator, denominator: commonDenominator)
-    let commonRight = Fraction(whole: right.whole, numerator: right.numerator * left.denominator, denominator: commonDenominator)
-    return (commonLeft, commonRight)
   }
 }
