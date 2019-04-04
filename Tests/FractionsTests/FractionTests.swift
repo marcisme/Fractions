@@ -19,7 +19,7 @@ final class FractionTests: XCTestCase {
 
   func testOutOfBoundsWholeNumber() {
     XCTAssertThrowsError(try Fraction(string: "9223372036854775808")) { error in
-      XCTAssertEqual(error as? Fraction.Error, Fraction.Error.outOfBoundsNumber)
+      XCTAssertEqual(error as? Fraction.Error, Fraction.Error.outOfBounds(.whole))
     }
   }
 
@@ -27,7 +27,7 @@ final class FractionTests: XCTestCase {
 
   func testInvalidWholeNumber() {
     XCTAssertThrowsError(try Fraction(string: "w")) { error in
-      XCTAssertEqual(error as? Fraction.Error, Fraction.Error.invalidWholeNumber)
+      XCTAssertEqual(error as? Fraction.Error, Fraction.Error.invalid(.whole))
     }
   }
 
@@ -42,25 +42,25 @@ final class FractionTests: XCTestCase {
 
   func testInvalidNumerator() {
     XCTAssertThrowsError(try Fraction(string: "n/2")) { error in
-      XCTAssertEqual(error as? Fraction.Error, Fraction.Error.invalidNumerator)
+      XCTAssertEqual(error as? Fraction.Error, Fraction.Error.invalid(.numerator))
     }
   }
 
   func testOutOfBoundsNumerator() {
     XCTAssertThrowsError(try Fraction(string: "9223372036854775808/1")) { error in
-      XCTAssertEqual(error as? Fraction.Error, Fraction.Error.outOfBoundsNumerator)
+      XCTAssertEqual(error as? Fraction.Error, Fraction.Error.outOfBounds(.numerator))
     }
   }
 
   func testInvalidDenominator() {
     XCTAssertThrowsError(try Fraction(string: "1/d")) { error in
-      XCTAssertEqual(error as? Fraction.Error, Fraction.Error.invalidDenominator)
+      XCTAssertEqual(error as? Fraction.Error, Fraction.Error.invalid(.denominator))
     }
   }
 
   func testOutOfBoundsDenominator() {
     XCTAssertThrowsError(try Fraction(string: "1/9223372036854775808")) { error in
-      XCTAssertEqual(error as? Fraction.Error, Fraction.Error.outOfBoundsDenominator)
+      XCTAssertEqual(error as? Fraction.Error, Fraction.Error.outOfBounds(.denominator))
     }
   }
 
