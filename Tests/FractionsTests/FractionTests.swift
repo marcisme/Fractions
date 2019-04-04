@@ -17,17 +17,24 @@ final class FractionTests: XCTestCase {
     XCTAssertEqual(fraction, Fraction(whole: 3, numerator: 0, denominator: 0))
   }
 
-  func testOutOfBoundsWholeNumber() {
-    XCTAssertThrowsError(try Fraction(string: "9223372036854775808")) { error in
-      XCTAssertEqual(error as? Fraction.Error, Fraction.Error.outOfBounds(.whole))
+  func testValidWholeNegativeNumber() {
+    guard let fraction = try? Fraction(string: "-3") else {
+      XCTFail("expected fraction")
+      return
     }
-  }
 
-  // TODO: test negative number
+    XCTAssertEqual(fraction, Fraction(whole: 3, numerator: 0, denominator: 0, isNegative: true))
+  }
 
   func testInvalidWholeNumber() {
     XCTAssertThrowsError(try Fraction(string: "w")) { error in
       XCTAssertEqual(error as? Fraction.Error, Fraction.Error.invalid(.whole))
+    }
+  }
+
+  func testOutOfBoundsWholeNumber() {
+    XCTAssertThrowsError(try Fraction(string: "9223372036854775808")) { error in
+      XCTAssertEqual(error as? Fraction.Error, Fraction.Error.outOfBounds(.whole))
     }
   }
 
@@ -38,6 +45,15 @@ final class FractionTests: XCTestCase {
     }
 
     XCTAssertEqual(fraction, Fraction(whole: 0, numerator: 1, denominator: 2))
+  }
+
+  func testValidNegativeFraction() {
+    guard let fraction = try? Fraction(string: "-1/2") else {
+      XCTFail("expected fraction")
+      return
+    }
+
+    XCTAssertEqual(fraction, Fraction(whole: 0, numerator: 1, denominator: 2, isNegative: true))
   }
 
   func testInvalidNumerator() {
@@ -71,6 +87,15 @@ final class FractionTests: XCTestCase {
     }
 
     XCTAssertEqual(fraction, Fraction(whole: 1, numerator: 2, denominator: 3))
+  }
+
+  func testValidMixedNegativeNumber() {
+    guard let fraction = try? Fraction(string: "-1_2/3") else {
+      XCTFail("expected fraction")
+      return
+    }
+
+    XCTAssertEqual(fraction, Fraction(whole: 1, numerator: 2, denominator: 3, isNegative: true))
   }
 
   func testValidImproperFraction() {
