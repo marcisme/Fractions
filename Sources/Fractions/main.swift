@@ -1,4 +1,15 @@
-print("? ")
+import FractionKit
+
+let parser = LineParser()
+print("? ", terminator: "")
 while let input = readLine() {
-  print(input)
+  print("= ", terminator: "")
+  do {
+    let operation = try parser.parse(input)
+    let fraction = try operation.execute()
+    print(fraction)
+  } catch {
+    print(error.localizedDescription)
+  }
+  print("\n? ", terminator: "")
 }
