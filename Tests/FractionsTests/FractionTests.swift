@@ -122,6 +122,19 @@ final class FractionTests: XCTestCase {
     XCTAssertEqual(otherResult.1, Fraction(whole: 0, numerator: 2, denominator: 6))
   }
 
+  func testCommonifyNoFraction() throws {
+    let fraction = Fraction(whole: 1, numerator: 0, denominator: 0)
+    let other = Fraction(whole: 0, numerator: 1, denominator: 2)
+
+    let fractionResult = try fraction.commonify(other)
+    let otherResult = try other.commonify(fraction)
+
+    XCTAssertEqual(fractionResult.0, Fraction(whole: 1, numerator: 0, denominator: 2))
+    XCTAssertEqual(fractionResult.1, Fraction(whole: 0, numerator: 1, denominator: 2))
+    XCTAssertEqual(otherResult.0, Fraction(whole: 0, numerator: 1, denominator: 2))
+    XCTAssertEqual(otherResult.1, Fraction(whole: 1, numerator: 0, denominator: 2))
+  }
+
   func testCommonifyWhenAlreadyCommon() throws {
     let fraction = Fraction(whole: 0, numerator: 1, denominator: 2)
     let other = Fraction(whole: 0, numerator: 1, denominator: 2)

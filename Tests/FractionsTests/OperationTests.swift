@@ -26,6 +26,16 @@ final class OperationTests: XCTestCase {
 
   // MARK: Addition
 
+  func testPositiveAdditionOfWholeAndFraction() throws {
+    let left = Fraction(whole: 1, numerator: 0, denominator: 0)
+    let right = Fraction(whole: 0, numerator: 1, denominator: 2)
+    let operation = InfixOperation.addition(left, right)
+
+    let result = try operation.execute()
+
+    XCTAssertEqual(result, Fraction(whole: 1, numerator: 1, denominator: 2))
+  }
+
   func testPositivePositiveAddition() throws {
     let left = Fraction(whole: 0, numerator: 1, denominator: 2)
     let right = Fraction(whole: 0, numerator: 1, denominator: 3)

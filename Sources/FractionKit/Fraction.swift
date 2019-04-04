@@ -101,10 +101,18 @@ public struct Fraction: Equatable {
       return (self, other)
     }
 
-    let commonDenominator = denominator * other.denominator
-    let commonSelf = Fraction(whole: whole, numerator: numerator * other.denominator, denominator: commonDenominator)
-    let commonOther = Fraction(whole: other.whole, numerator: other.numerator * denominator, denominator: commonDenominator)
-    return (commonSelf, commonOther)
+    if denominator == 0 {
+      let commonSelf = Fraction(whole: whole, numerator: 0, denominator: other.denominator)
+      return (commonSelf, other)
+    } else if other.denominator == 0 {
+      let commonOther = Fraction(whole: other.whole, numerator: 0, denominator: denominator)
+      return (self, commonOther)
+    } else {
+      let commonDenominator = denominator * other.denominator
+      let commonSelf = Fraction(whole: whole, numerator: numerator * other.denominator, denominator: commonDenominator)
+      let commonOther = Fraction(whole: other.whole, numerator: other.numerator * denominator, denominator: commonDenominator)
+      return (commonSelf, commonOther)
+    }
   }
 }
 
