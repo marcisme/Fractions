@@ -60,6 +60,26 @@ public struct Fraction: Equatable {
     }
   }
 
+  public var uiDescription: String {
+    var d = ""
+    if isNegative {
+      d += "-"
+    }
+    if whole > 0 {
+      d += String(whole)
+    }
+    if numerator > 0 {
+      if whole > 0 {
+        d += "_"
+      }
+      d += "\(numerator)/\(denominator)"
+    }
+    if whole == 0 && numerator == 0 {
+      d += String(0)
+    }
+    return d
+  }
+
   // TODO: LCD would reduce overflows
   public func commonify(_ other: Fraction) throws -> (Fraction, Fraction) {
     guard denominator != other.denominator else {
