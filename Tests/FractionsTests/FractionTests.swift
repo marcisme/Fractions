@@ -14,7 +14,7 @@ final class FractionTests: XCTestCase {
       return
     }
 
-    XCTAssertEqual(fraction, Fraction(whole: 3, numerator: 0, denominator: 0))
+    XCTAssertEqual(fraction, Fraction(numerator: 3, denominator: 1))
   }
 
   func testValidWholeNegativeNumber() {
@@ -23,7 +23,7 @@ final class FractionTests: XCTestCase {
       return
     }
 
-    XCTAssertEqual(fraction, Fraction(whole: 3, numerator: 0, denominator: 0, isNegative: true))
+    XCTAssertEqual(fraction, Fraction(numerator: -3, denominator: 1))
   }
 
   func testInvalidWholeNumber() {
@@ -44,7 +44,7 @@ final class FractionTests: XCTestCase {
       return
     }
 
-    XCTAssertEqual(fraction, Fraction(whole: 0, numerator: 1, denominator: 2))
+    XCTAssertEqual(fraction, Fraction(numerator: 1, denominator: 2))
   }
 
   func testValidNegativeFraction() {
@@ -53,7 +53,7 @@ final class FractionTests: XCTestCase {
       return
     }
 
-    XCTAssertEqual(fraction, Fraction(whole: 0, numerator: 1, denominator: 2, isNegative: true))
+    XCTAssertEqual(fraction, Fraction(numerator: -1, denominator: 2))
   }
 
   func testInvalidNumerator() {
@@ -86,7 +86,7 @@ final class FractionTests: XCTestCase {
       return
     }
 
-    XCTAssertEqual(fraction, Fraction(whole: 1, numerator: 2, denominator: 3))
+    XCTAssertEqual(fraction, Fraction(numerator: 5, denominator: 3))
   }
 
   func testValidMixedNegativeNumber() {
@@ -95,7 +95,7 @@ final class FractionTests: XCTestCase {
       return
     }
 
-    XCTAssertEqual(fraction, Fraction(whole: 1, numerator: 2, denominator: 3, isNegative: true))
+    XCTAssertEqual(fraction, Fraction(numerator: -5, denominator: 3))
   }
 
   func testValidImproperFraction() {
@@ -104,100 +104,100 @@ final class FractionTests: XCTestCase {
       return
     }
 
-    XCTAssertEqual(fraction, Fraction(whole: 0, numerator: 2, denominator: 1))
+    XCTAssertEqual(fraction, Fraction(numerator: 2, denominator: 1))
   }
 
   // MARK: commonify
 
   func testCommonify() throws {
-    let fraction = Fraction(whole: 0, numerator: 1, denominator: 3) // 2/6
-    let other = Fraction(whole: 0, numerator: 1, denominator: 2) // 3/6
+    let fraction = Fraction(numerator: 1, denominator: 3) // 2/6
+    let other = Fraction(numerator: 1, denominator: 2) // 3/6
 
     let fractionResult = try fraction.commonify(other)
     let otherResult = try other.commonify(fraction)
 
-    XCTAssertEqual(fractionResult.0, Fraction(whole: 0, numerator: 2, denominator: 6))
-    XCTAssertEqual(fractionResult.1, Fraction(whole: 0, numerator: 3, denominator: 6))
-    XCTAssertEqual(otherResult.0, Fraction(whole: 0, numerator: 3, denominator: 6))
-    XCTAssertEqual(otherResult.1, Fraction(whole: 0, numerator: 2, denominator: 6))
+    XCTAssertEqual(fractionResult.0, Fraction(numerator: 2, denominator: 6))
+    XCTAssertEqual(fractionResult.1, Fraction(numerator: 3, denominator: 6))
+    XCTAssertEqual(otherResult.0, Fraction(numerator: 3, denominator: 6))
+    XCTAssertEqual(otherResult.1, Fraction(numerator: 2, denominator: 6))
   }
 
   func testCommonifyNoFraction() throws {
-    let fraction = Fraction(whole: 1, numerator: 0, denominator: 0)
-    let other = Fraction(whole: 0, numerator: 1, denominator: 2)
+    let fraction = Fraction(numerator: 1, denominator: 1)
+    let other = Fraction(numerator: 1, denominator: 2)
 
     let fractionResult = try fraction.commonify(other)
     let otherResult = try other.commonify(fraction)
 
-    XCTAssertEqual(fractionResult.0, Fraction(whole: 1, numerator: 0, denominator: 2))
-    XCTAssertEqual(fractionResult.1, Fraction(whole: 0, numerator: 1, denominator: 2))
-    XCTAssertEqual(otherResult.0, Fraction(whole: 0, numerator: 1, denominator: 2))
-    XCTAssertEqual(otherResult.1, Fraction(whole: 1, numerator: 0, denominator: 2))
+    XCTAssertEqual(fractionResult.0, Fraction(numerator: 2, denominator: 2))
+    XCTAssertEqual(fractionResult.1, Fraction(numerator: 1, denominator: 2))
+    XCTAssertEqual(otherResult.0, Fraction(numerator: 1, denominator: 2))
+    XCTAssertEqual(otherResult.1, Fraction(numerator: 2, denominator: 2))
   }
 
   func testCommonifyWhenAlreadyCommon() throws {
-    let fraction = Fraction(whole: 0, numerator: 1, denominator: 2)
-    let other = Fraction(whole: 0, numerator: 1, denominator: 2)
+    let fraction = Fraction(numerator: 1, denominator: 2)
+    let other = Fraction(numerator: 1, denominator: 2)
 
     let fractionResult = try fraction.commonify(other)
     let otherResult = try other.commonify(fraction)
 
-    XCTAssertEqual(fractionResult.0, Fraction(whole: 0, numerator: 1, denominator: 2))
-    XCTAssertEqual(fractionResult.1, Fraction(whole: 0, numerator: 1, denominator: 2))
-    XCTAssertEqual(otherResult.0, Fraction(whole: 0, numerator: 1, denominator: 2))
-    XCTAssertEqual(otherResult.1, Fraction(whole: 0, numerator: 1, denominator: 2))
+    XCTAssertEqual(fractionResult.0, Fraction(numerator: 1, denominator: 2))
+    XCTAssertEqual(fractionResult.1, Fraction(numerator: 1, denominator: 2))
+    XCTAssertEqual(otherResult.0, Fraction(numerator: 1, denominator: 2))
+    XCTAssertEqual(otherResult.1, Fraction(numerator: 1, denominator: 2))
   }
 
   // MARK: uiDescription
 
   func testUIDescriptionForPositiveWhole() {
-    XCTAssertEqual(Fraction(whole: 1, numerator: 0, denominator: 0).uiDescription, "1")
+    XCTAssertEqual(Fraction(numerator: 1, denominator: 1).uiDescription, "1")
   }
 
   func testUIDescriptionForPositiveFraction() {
-    XCTAssertEqual(Fraction(whole: 0, numerator: 1, denominator: 2).uiDescription, "1/2")
+    XCTAssertEqual(Fraction(numerator: 1, denominator: 2).uiDescription, "1/2")
   }
 
   func testUIDescriptionForPositiveCompound() {
-    XCTAssertEqual(Fraction(whole: 1, numerator: 2, denominator: 3).uiDescription, "1_2/3")
+    XCTAssertEqual(Fraction(numerator: 5, denominator: 3).uiDescription, "1_2/3")
   }
 
   func testUIDescriptionForNegativeWhole() {
-    XCTAssertEqual(Fraction(whole: 1, numerator: 0, denominator: 0, isNegative: true).uiDescription, "-1")
+    XCTAssertEqual(Fraction(numerator: -1, denominator: 1).uiDescription, "-1")
   }
 
   func testUIDescriptionForNegativeFraction() {
-    XCTAssertEqual(Fraction(whole: 0, numerator: 1, denominator: 2, isNegative: true).uiDescription, "-1/2")
+    XCTAssertEqual(Fraction(numerator: -1, denominator: 2).uiDescription, "-1/2")
   }
 
   func testUIDescriptionForNegativeCompound() {
-    XCTAssertEqual(Fraction(whole: 1, numerator: 2, denominator: 3, isNegative: true).uiDescription, "-1_2/3")
+    XCTAssertEqual(Fraction(numerator: -5, denominator: 3).uiDescription, "-1_2/3")
   }
 
   func testUIDescriptionForZero() {
-    XCTAssertEqual(Fraction(whole: 0, numerator: 0, denominator: 0).uiDescription, "0")
+    XCTAssertEqual(Fraction(numerator: 0, denominator: 0).uiDescription, "0")
   }
 
   // MARK: simplify
 
   func testSimplifyWhenSimplified() {
-    let f = Fraction(whole: 1, numerator: 2, denominator: 3)
-    XCTAssertEqual(f.simplify, Fraction(whole: 1, numerator: 2, denominator: 3))
+    let f = Fraction(numerator: 5, denominator: 3)
+    XCTAssertEqual(f.simplify, Fraction(numerator: 5, denominator: 3))
   }
 
   func testSimplifyEqualNumeratorAndDenominator() {
-    let f = Fraction(whole: 0, numerator: 1, denominator: 1)
-    XCTAssertEqual(f.simplify, Fraction(whole: 1, numerator: 0, denominator: 0))
+    let f = Fraction(numerator: 1, denominator: 1)
+    XCTAssertEqual(f.simplify, Fraction(numerator: 1, denominator: 1))
   }
 
   func testSimplifyDenominatorEvenlyDivisibleByNumerator() {
-    let f = Fraction(whole: 0, numerator: 2, denominator: 4)
-    XCTAssertEqual(f.simplify, Fraction(whole: 0, numerator: 1, denominator: 2))
+    let f = Fraction(numerator: 2, denominator: 4)
+    XCTAssertEqual(f.simplify, Fraction(numerator: 1, denominator: 2))
   }
 
   func testSimplifyImproper() {
-    let f = Fraction(whole: 0, numerator: 3, denominator: 2)
-    XCTAssertEqual(f.simplify, Fraction(whole: 1, numerator: 1, denominator: 2))
+    let f = Fraction(numerator: 3, denominator: 2)
+    XCTAssertEqual(f.simplify, Fraction(numerator: 3, denominator: 2))
   }
 
   static var allTests = [

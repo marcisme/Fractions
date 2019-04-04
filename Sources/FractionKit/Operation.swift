@@ -34,26 +34,8 @@ public enum InfixOperation: Equatable {
 
   private func add(_ left: Fraction, _ right: Fraction) throws -> Fraction {
     let (commonLeft, commonRight) = try left.commonify(right)
-    switch (left.isNegative, right.isNegative) {
-    case (false, false), (true, true):
-      let whole = try addHandlingOverflow(commonLeft.whole, commonRight.whole)
-      let numerator = try addHandlingOverflow(commonLeft.numerator, commonRight.numerator)
-      let denominator = commonLeft.denominator
-      let isNegative = left.isNegative && right.isNegative
-      return Fraction(whole: whole, numerator: numerator, denominator: denominator, isNegative: isNegative)
-    case (false, true):
-      let whole = commonLeft.whole - commonRight.whole
-      let numerator = commonLeft.numerator - commonRight.numerator
-      let denominator = commonLeft.denominator
-      let isNegative = whole < 0 || numerator < 0
-      return Fraction(whole: abs(whole), numerator: abs(numerator), denominator: denominator, isNegative: isNegative)
-    case (true, false):
-      let whole = commonRight.whole - commonLeft.whole
-      let numerator = commonRight.numerator - commonLeft.numerator
-      let denominator = commonLeft.denominator
-      let isNegative = whole < 0 || numerator < 0
-      return Fraction(whole: abs(whole), numerator: abs(numerator), denominator: denominator, isNegative: isNegative)
-    }
+    let numerator = try addHandlingOverflow(commonLeft.numerator, commonRight.numerator)
+    return Fraction(numerator: numerator, denominator: commonLeft.denominator)
   }
 
   private func addHandlingOverflow(_ a: Int, _ b: Int) throws -> Int {
