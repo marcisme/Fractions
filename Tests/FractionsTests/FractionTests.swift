@@ -196,8 +196,8 @@ final class FractionTests: XCTestCase {
   }
 
   func testSimplifyImproper() {
-    let f = Fraction(numerator: 3, denominator: 2)
-    XCTAssertEqual(f.simplify, Fraction(numerator: 3, denominator: 2))
+    let f = Fraction(numerator: 10, denominator: 4)
+    XCTAssertEqual(f.simplify, Fraction(numerator: 5, denominator: 2))
   }
 
   static var allTests = [
