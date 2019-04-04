@@ -13,6 +13,7 @@ public struct Fraction: Equatable {
     case outOfBounds(NumericComponentType)
   }
 
+  // TODO: can we use UInt?
   let whole: Int
   let numerator: Int
   let denominator: Int
