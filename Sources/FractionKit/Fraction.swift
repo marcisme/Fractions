@@ -1,11 +1,5 @@
 import Foundation
 
-// TODO: consider extracting to separate type
-private func isNumeric(_ string: String) -> Bool {
-  let regex = try! NSRegularExpression(pattern: "^\\d+$")
-  return regex.numberOfMatches(in: string, range: NSMakeRange(0, string.count)) > 0
-}
-
 public struct Fraction: Equatable {
   public enum NumericComponentType: Equatable {
     case whole
@@ -61,7 +55,7 @@ fileprivate func parseInt(_ string: String, type: Fraction.NumericComponentType)
     return int
   }
 
-  if isNumeric(string) {
+  if string.isNumeric {
     throw Fraction.Error.outOfBounds(type)
   } else {
     throw Fraction.Error.invalid(type)
