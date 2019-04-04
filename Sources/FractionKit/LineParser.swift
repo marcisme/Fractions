@@ -13,7 +13,7 @@ public struct LineParser {
     // FIXME
     struct StubOperation: Operation {
       func execute() -> Fraction {
-        return Fraction(numerator: 1, denominator: 1)
+        return Fraction(whole: 1, numerator: 1, denominator: 1)
       }
     }
     return StubOperation()
