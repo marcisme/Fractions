@@ -30,3 +30,5 @@ swift run
   initial effort was made to store the numerator and whole number separately to
   increase this limit, but that significantly increased the complexity of all
   calculations.
+* The various `allTests` properties do not include all tests. All tests will
+  still run on macOS, but they will not on Linux.
