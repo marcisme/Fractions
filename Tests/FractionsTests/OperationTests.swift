@@ -12,7 +12,7 @@ final class OperationTests: XCTestCase {
   func testInvalidOperator() {
     let f = Fraction(numerator: 1, denominator: 1)
     XCTAssertThrowsError(try InfixOperation.operation(for: "?", left: f, right: f)) { error in
-      XCTAssertEqual(error as? InfixOperation.Error, InfixOperation.Error.invalidOperator)
+      XCTAssertEqual(error as? InfixOperation.Error, InfixOperation.Error.invalidOperator("?"))
     }
   }
 

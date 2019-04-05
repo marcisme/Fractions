@@ -32,7 +32,7 @@ final class LineParserTests: XCTestCase {
     let parser = LineParser()
 
     XCTAssertThrowsError(try parser.parse("1 ? 1")) { error in
-      XCTAssertEqual(error as? InfixOperation.Error, InfixOperation.Error.invalidOperator)
+      XCTAssertEqual(error as? InfixOperation.Error, InfixOperation.Error.invalidOperator("?"))
     }
   }
 

@@ -1,9 +1,24 @@
+import Foundation
+
 public enum InfixOperation: Equatable {
-  public enum Error: Swift.Error {
+  public enum Error: Swift.Error, Equatable, LocalizedError {
     case emptyString
-    case invalidOperator
+    case invalidOperator(String)
     case operationOverflowed
     case divisionByZero
+
+    public var errorDescription: String? {
+      switch self {
+      case .invalidOperator(let op):
+        return "Invalid Operator: \(op)"
+      case .operationOverflowed:
+        return "Operation Overflowed"
+      case .divisionByZero:
+        return "You cannot divide by zero"
+      default:
+        return nil
+      }
+    }
   }
 
   case addition(Fraction, Fraction)
@@ -26,7 +41,7 @@ public enum InfixOperation: Equatable {
     case "/":
       return .division(left, right)
     default:
-      throw Error.invalidOperator
+      throw Error.invalidOperator(string)
     }
   }
 

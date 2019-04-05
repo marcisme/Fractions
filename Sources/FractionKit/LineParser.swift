@@ -1,7 +1,18 @@
+import Foundation
+
 public struct LineParser {
-  public enum Error: Swift.Error {
+  public enum Error: Swift.Error, Equatable, LocalizedError {
     case emptyLine
     case invalidInput
+
+    public var errorDescription: String? {
+      switch self {
+      case .emptyLine:
+        return "Please enter an expression"
+      case .invalidInput:
+        return "Valid expressions are in the form of \"operand operation operand\""
+      }
+    }
   }
 
   public init() {

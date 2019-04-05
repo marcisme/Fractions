@@ -7,10 +7,21 @@ public struct Fraction: Equatable {
     case denominator
   }
 
-  public enum Error: Swift.Error, Equatable {
+  public enum Error: Swift.Error, Equatable, LocalizedError {
     case emptyString
     case invalid(NumericComponentType)
     case outOfBounds(NumericComponentType)
+
+    public var errorDescription: String? {
+      switch self {
+      case .invalid:
+        return "Invalid number"
+      case .outOfBounds:
+        return "Value is out of bounds"
+      default:
+        return nil
+      }
+    }
   }
 
   private var whole: Int {
