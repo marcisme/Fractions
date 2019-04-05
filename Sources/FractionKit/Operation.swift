@@ -3,6 +3,7 @@ public enum InfixOperation: Equatable {
     case emptyString
     case invalidOperator
     case operationOverflowed
+    case divisionByZero
   }
 
   case addition(Fraction, Fraction)
@@ -22,6 +23,8 @@ public enum InfixOperation: Equatable {
       return .subtraction(left, right)
     case "*":
       return .multiplication(left, right)
+    case "/":
+      return .division(left, right)
     default:
       throw Error.invalidOperator
     }
@@ -35,8 +38,8 @@ public enum InfixOperation: Equatable {
       return try subtract(left, right)
     case let .multiplication(left, right):
       return try multiply(left, right)
-    default:
-      fatalError()
+    case let .division(left, right):
+      return try divide(left, right)
     }
   }
 
@@ -80,5 +83,14 @@ public enum InfixOperation: Equatable {
       throw Error.operationOverflowed
     }
     return result
+  }
+
+  private func divide(_ left: Fraction, _ right: Fraction) throws -> Fraction {
+    guard right.numerator > 0 else {
+      throw Error.divisionByZero
+    }
+
+    let recipricol = Fraction(numerator: right.denominator, denominator: right.numerator)
+    return try multiply(left, recipricol)
   }
 }
