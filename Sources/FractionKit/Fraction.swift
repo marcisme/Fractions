@@ -1,5 +1,9 @@
 import Foundation
 
+// Fractions are modeled as a numerator and denominator.
+// An earlier version used separate whole number and negativity
+// fields in the hope of reducing overflows, but that approach
+// made calculations much more difficult.
 public struct Fraction: Equatable {
   public enum NumericComponentType: Equatable {
     case whole

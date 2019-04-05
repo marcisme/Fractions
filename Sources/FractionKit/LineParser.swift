@@ -1,5 +1,6 @@
 import Foundation
 
+// This struct is used to parse a single line expression.
 public struct LineParser {
   public enum Error: Swift.Error, Equatable, LocalizedError {
     case emptyLine
@@ -18,6 +19,8 @@ public struct LineParser {
   public init() {
   }
 
+  // parse input in the form of:
+  //   operand operation operand
   public func parse(_ input: String) throws -> InfixOperation {
     guard input.count > 0 else {
       throw Error.emptyLine

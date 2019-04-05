@@ -1,5 +1,6 @@
 import Foundation
 
+// The various operations that can be executed against operands.
 public enum InfixOperation: Equatable {
   public enum Error: Swift.Error, Equatable, LocalizedError {
     case emptyString
