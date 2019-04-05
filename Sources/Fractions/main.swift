@@ -7,7 +7,7 @@ while let input = readLine() {
   do {
     let operation = try parser.parse(input)
     let fraction = try operation.execute()
-    print(fraction.uiDescription)
+    print(fraction.simplify.uiDescription)
   } catch {
     print(error.localizedDescription)
   }

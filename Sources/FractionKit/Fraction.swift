@@ -88,18 +88,23 @@ public struct Fraction: Equatable {
   }
 
   public var simplify: Fraction {
-    if numerator == denominator {
-      return Fraction(numerator: 1, denominator: 1)
+    let gcd = computeGCD(numerator, denominator)
+    return Fraction(numerator: numerator / gcd, denominator: denominator / gcd)
+  }
+
+  // Thank you, Ray
+  // https://github.com/raywenderlich/swift-algorithm-club/tree/master/GCD
+  private func computeGCD(_ m: Int, _ n: Int) -> Int {
+    var a: Int = 0
+    var b: Int = max(m, n)
+    var r: Int = min(m, n)
+
+    while r != 0 {
+      a = b
+      b = r
+      r = a % b
     }
-    if denominator % numerator == 0 {
-      return Fraction(numerator: 1, denominator: denominator / numerator)
-    }
-    if numerator > denominator {
-      let whole = numerator / denominator
-      let newNumerator = (numerator % denominator) + (whole * denominator)
-      return Fraction(numerator: newNumerator, denominator: denominator)
-    }
-    return self
+    return b
   }
 
   // TODO: LCD would reduce overflows
