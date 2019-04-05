@@ -20,6 +20,8 @@ public enum InfixOperation: Equatable {
       return .addition(left, right)
     case "-":
       return .subtraction(left, right)
+    case "*":
+      return .multiplication(left, right)
     default:
       throw Error.invalidOperator
     }
@@ -31,6 +33,8 @@ public enum InfixOperation: Equatable {
       return try add(left, right)
     case let .subtraction(left, right):
       return try subtract(left, right)
+    case let .multiplication(left, right):
+      return try multiply(left, right)
     default:
       fatalError()
     }
@@ -58,6 +62,20 @@ public enum InfixOperation: Equatable {
 
   private func subtractHandlingOverflow(_ a: Int, _ b: Int) throws -> Int {
     let (result, overflow) = a.subtractingReportingOverflow(b)
+    guard !overflow else {
+      throw Error.operationOverflowed
+    }
+    return result
+  }
+
+  private func multiply(_ left: Fraction, _ right: Fraction) throws -> Fraction {
+    let numerator = try multiplyHandlingOverflow(left.numerator, right.numerator)
+    let denominator = try multiplyHandlingOverflow(left.denominator, right.denominator)
+    return Fraction(numerator: numerator, denominator: denominator)
+  }
+
+  private func multiplyHandlingOverflow(_ a: Int, _ b: Int) throws -> Int {
+    let (result, overflow) = a.multipliedReportingOverflow(by: b)
     guard !overflow else {
       throw Error.operationOverflowed
     }

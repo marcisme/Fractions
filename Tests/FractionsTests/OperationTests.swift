@@ -32,6 +32,14 @@ final class OperationTests: XCTestCase {
     XCTAssertEqual(operation, InfixOperation.subtraction(f, f))
   }
 
+  func testMultiplicationOperator() throws {
+    let f = Fraction(numerator: 1, denominator: 1)
+
+    let operation = try InfixOperation.operation(for: "*", left: f, right: f)
+
+    XCTAssertEqual(operation, InfixOperation.multiplication(f, f))
+  }
+
   // MARK: Addition
 
   func testPositiveAddition() throws {
@@ -100,6 +108,38 @@ final class OperationTests: XCTestCase {
     let left = Fraction(numerator: Int.max, denominator: 1)
     let right = Fraction(numerator: -1, denominator: 1)
     let operation = InfixOperation.subtraction(left, right)
+
+    XCTAssertThrowsError(try operation.execute()) { error in
+      XCTAssertEqual(error as? InfixOperation.Error, InfixOperation.Error.operationOverflowed)
+    }
+  }
+
+  // MARK: Multiplication
+
+  func testMultiplication() throws {
+    let left = Fraction(numerator: 3, denominator: 1)
+    let right = Fraction(numerator: 1, denominator: 2)
+    let operation = InfixOperation.multiplication(left, right)
+
+    let result = try operation.execute()
+
+    XCTAssertEqual(result, Fraction(numerator: 3, denominator: 2))
+  }
+
+  func testSubtractionNumeratorOverflow() throws {
+    let left = Fraction(numerator: Int.max, denominator: 1)
+    let right = Fraction(numerator: 2, denominator: 1)
+    let operation = InfixOperation.multiplication(left, right)
+
+    XCTAssertThrowsError(try operation.execute()) { error in
+      XCTAssertEqual(error as? InfixOperation.Error, InfixOperation.Error.operationOverflowed)
+    }
+  }
+
+  func testSubtractionDenominatorOverflow() throws {
+    let left = Fraction(numerator: 1, denominator: Int.max)
+    let right = Fraction(numerator: 1, denominator: 2)
+    let operation = InfixOperation.multiplication(left, right)
 
     XCTAssertThrowsError(try operation.execute()) { error in
       XCTAssertEqual(error as? InfixOperation.Error, InfixOperation.Error.operationOverflowed)
