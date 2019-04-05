@@ -22,6 +22,12 @@ You can run the program with:
 swift run
 ```
 
+You can generate an Xcode project with:
+
+``` bash
+swift package generate-xcodeproj
+```
+
 ## Limitations
 
 * Fractions are stored as a numerator/denominator pair, which also includes any
