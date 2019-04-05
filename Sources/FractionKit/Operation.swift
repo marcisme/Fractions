@@ -18,6 +18,8 @@ public enum InfixOperation: Equatable {
     switch string {
     case "+":
       return .addition(left, right)
+    case "-":
+      return .subtraction(left, right)
     default:
       throw Error.invalidOperator
     }
@@ -27,6 +29,8 @@ public enum InfixOperation: Equatable {
     switch self {
     case let .addition(left, right):
       return try add(left, right)
+    case let .subtraction(left, right):
+      return try subtract(left, right)
     default:
       fatalError()
     }
@@ -40,6 +44,20 @@ public enum InfixOperation: Equatable {
 
   private func addHandlingOverflow(_ a: Int, _ b: Int) throws -> Int {
     let (result, overflow) = a.addingReportingOverflow(b)
+    guard !overflow else {
+      throw Error.operationOverflowed
+    }
+    return result
+  }
+
+  private func subtract(_ left: Fraction, _ right: Fraction) throws -> Fraction {
+    let (commonLeft, commonRight) = try left.commonify(right)
+    let numerator = try subtractHandlingOverflow(commonLeft.numerator, commonRight.numerator)
+    return Fraction(numerator: numerator, denominator: commonLeft.denominator)
+  }
+
+  private func subtractHandlingOverflow(_ a: Int, _ b: Int) throws -> Int {
+    let (result, overflow) = a.subtractingReportingOverflow(b)
     guard !overflow else {
       throw Error.operationOverflowed
     }
