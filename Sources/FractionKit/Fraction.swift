@@ -107,24 +107,19 @@ public struct Fraction: Equatable {
     return b
   }
 
-  // TODO: LCD would reduce overflows
   public func commonify(_ other: Fraction) throws -> (Fraction, Fraction) {
     guard denominator != other.denominator else {
       return (self, other)
     }
 
-    if denominator == 0 {
-      let commonSelf = Fraction(numerator: 0, denominator: other.denominator)
-      return (commonSelf, other)
-    } else if other.denominator == 0 {
-      let commonOther = Fraction(numerator: 0, denominator: denominator)
-      return (self, commonOther)
-    } else {
-      let commonDenominator = denominator * other.denominator
-      let commonSelf = Fraction(numerator: numerator * other.denominator, denominator: commonDenominator)
-      let commonOther = Fraction(numerator: other.numerator * denominator, denominator: commonDenominator)
-      return (commonSelf, commonOther)
-    }
+    let lcm = computeLCM(denominator, other.denominator)
+    let commonSelf = Fraction(numerator: numerator * (lcm / denominator), denominator: lcm)
+    let commonOther = Fraction(numerator: other.numerator * (lcm / other.denominator), denominator: lcm)
+    return (commonSelf, commonOther)
+  }
+
+  private func computeLCM(_ m: Int, _ n: Int) -> Int {
+    return m / computeGCD(m, n) * n
   }
 }
 
