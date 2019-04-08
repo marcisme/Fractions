@@ -200,6 +200,11 @@ final class FractionTests: XCTestCase {
     XCTAssertEqual(f.simplify, Fraction(numerator: 5, denominator: 2))
   }
 
+  func testSimplifyNegative() {
+    let f = Fraction(numerator: -1, denominator: 2)
+    XCTAssertEqual(f.simplify, Fraction(numerator: -1, denominator: 2))
+  }
+
   static var allTests = [
     ("testEmptyString", testEmptyString),
   ]
