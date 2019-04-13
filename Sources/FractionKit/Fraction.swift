@@ -93,7 +93,19 @@ public struct Fraction: Equatable {
 
   public var simplify: Fraction {
     let gcd = computeGCD(numerator, denominator)
-    return Fraction(numerator: numerator / gcd, denominator: denominator / gcd)
+    // we probably shouldn't changed signedness as a result of simplification
+    let n = matchSign(of: numerator / gcd, to: numerator)
+    let d = matchSign(of: denominator / gcd, to: denominator)
+    return Fraction(numerator: n, denominator: d)
+  }
+
+  private func matchSign(of value: Int, to referenceValue: Int) -> Int {
+    switch (value < 0, referenceValue < 0) {
+    case (true, true), (false, false):
+      return value
+    case (true, false), (false, true):
+      return value * -1
+    }
   }
 
   // Thank you, Ray
